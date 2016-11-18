@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hackduke-backend-workshop.iml" filepath="$PROJECT_DIR$/.idea/modules/hackduke-backend-workshop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hackduke-backend-workshop_main.iml" filepath="$PROJECT_DIR$/.idea/modules/hackduke-backend-workshop_main.iml" group="hackduke-backend-workshop" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hackduke-backend-workshop_test.iml" filepath="$PROJECT_DIR$/.idea/modules/hackduke-backend-workshop_test.iml" group="hackduke-backend-workshop" />
+    </modules>
+  </component>
+</project>
