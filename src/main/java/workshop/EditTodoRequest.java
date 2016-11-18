@@ -5,4 +5,5 @@ package workshop;
  */
 public class EditTodoRequest {
     public String todo;
+    public boolean completed;
 }

@@ -29,9 +29,17 @@ public class Controller {
     @RequestMapping(value = "/api/todos",
             method = RequestMethod.GET)
     @ResponseBody
-    public List<Todo> getTodos() {
-        List<Todo> todos = jt.query("SELECT todo_id, todo FROM todos", new TodoMapper());
-        return todos;
+    public List<Todo> getTodos(@RequestParam(value = "completed", required = false) Boolean completed) {
+        if (completed == null) {
+            // if completed == null, then we just fetch all
+            return jt.query("SELECT todo_id, todo, completed FROM todos", new TodoMapper());
+        } else if (completed) {
+            // if completed == true, then we just fetch the completed todos
+            return jt.query("SELECT todo_id, todo, completed FROM todos WHERE completed = true", new TodoMapper());
+        } else {
+            // if completed == false, then we just fetch the not completed todos
+            return jt.query("SELECT todo_id, todo, completed FROM todos WHERE completed = false", new TodoMapper());
+        }
     }
 
     @RequestMapping(value = "/api/todos",
@@ -39,7 +47,7 @@ public class Controller {
             headers = {"Content-type=application/json"})
     @ResponseBody
     public boolean createTodo(@RequestBody final CreateTodoRequest createTodoRequest) {
-        jt.update("INSERT INTO todos (todo) VALUES (?)", createTodoRequest.todo);
+        jt.update("INSERT INTO todos (todo, completed) VALUES (?, ?)", createTodoRequest.todo, false);
         return true;
     }
 
@@ -56,7 +64,8 @@ public class Controller {
             headers = {"Content-type=application/json"})
     @ResponseBody
     public boolean editTodo(@RequestBody final EditTodoRequest editTodoRequest, @PathVariable(value = "todoId") long todoId) {
-        jt.update("UPDATE todos SET todo = ? WHERE todo_id = ?", editTodoRequest.todo, todoId);
+        jt.update("UPDATE todos SET todo = ?, completed = ? WHERE todo_id = ?",
+                editTodoRequest.todo, editTodoRequest.completed, todoId);
         return true;
     }
 
@@ -65,6 +74,7 @@ public class Controller {
             Todo todo = new Todo();
             todo.todoId = rs.getLong("todo_id");
             todo.todo = rs.getString("todo");
+            todo.completed = rs.getBoolean("completed");
             return todo;
         }
     }

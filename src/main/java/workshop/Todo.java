@@ -6,4 +6,5 @@ package workshop;
 public class Todo {
     public long todoId;
     public String todo;
+    public boolean completed;
 }
