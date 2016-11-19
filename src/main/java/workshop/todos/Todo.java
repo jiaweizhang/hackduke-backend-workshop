@@ -1,9 +1,10 @@
-package workshop;
+package workshop.todos;
 
 /**
  * Created by jiaweizhang on 11/18/2016.
  */
-public class EditTodoRequest {
+public class Todo {
+    public long todoId;
     public String todo;
     public boolean completed;
 }
