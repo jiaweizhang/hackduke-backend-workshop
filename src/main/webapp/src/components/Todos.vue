@@ -19,7 +19,7 @@
     <div class="form-group">
       <label>New Todo</label>
       <input @keyup.enter="createTodo" type="text" class="form-control" v-model="newTodo"
-             placeholder="Go buy condoms">
+             placeholder="Prepare slides for hackduke backend workshop">
       <br/>
       <label>Todos</label>
       <form>
