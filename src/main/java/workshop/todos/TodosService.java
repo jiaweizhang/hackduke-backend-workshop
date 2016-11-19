@@ -25,17 +25,17 @@ public class TodosService {
     public StdResponse getTodos(StdRequest stdRequest, Boolean completed) {
         if (completed == null) {
             // if completed == null, then we just fetch all
-            List<Todo> todos = jt.query("SELECT todo_id, todo, completed FROM todos WHERE owner = ?",
+            List<Todo> todos = jt.query("SELECT todo_id, todo, completed FROM todos WHERE owner = ? ORDER BY todo_id",
                     new Object[]{stdRequest.username}, new TodoMapper());
             return new StdResponse(HttpStatus.OK, true, "Retrieved all todos", todos);
         } else if (completed) {
             // if completed == true, then we just fetch the completed todos
-            List<Todo> todos = jt.query("SELECT todo_id, todo, completed FROM todos WHERE completed = true AND owner = ?",
+            List<Todo> todos = jt.query("SELECT todo_id, todo, completed FROM todos WHERE completed = true AND owner = ? ORDER BY todo_id",
                     new Object[]{stdRequest.username}, new TodoMapper());
             return new StdResponse(HttpStatus.OK, true, "Retrieved all completed todos", todos);
         } else {
             // if completed == false, then we just fetch the not completed todos
-            List<Todo> todos = jt.query("SELECT todo_id, todo, completed FROM todos WHERE completed = false AND owner = ?",
+            List<Todo> todos = jt.query("SELECT todo_id, todo, completed FROM todos WHERE completed = false AND owner = ? ORDER BY todo_id",
                     new Object[]{stdRequest.username}, new TodoMapper());
             return new StdResponse(HttpStatus.OK, true, "Retrieved all incomplete todos", todos);
         }

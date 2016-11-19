@@ -31,7 +31,7 @@ public class UsersService {
                 registerRequest.username);
 
         if (usernameExists) {
-            return new StdResponse(HttpStatus.OK, false, "Username already exists");
+            return new StdResponse(HttpStatus.BAD_REQUEST, false, "Username already exists");
         }
 
         String passhash = passwordEncoder.encode(registerRequest.password);
@@ -52,7 +52,7 @@ public class UsersService {
                 loginRequest.username);
 
         if (!usernameExists) {
-            return new StdResponse(HttpStatus.OK, false, "Username does not exist");
+            return new StdResponse(HttpStatus.BAD_REQUEST, false, "Username does not exist");
         }
 
         String passhash = jt.queryForObject("SELECT passhash FROM users WHERE username = ?", String.class, loginRequest.username);
@@ -64,7 +64,7 @@ public class UsersService {
             return new StdResponse(HttpStatus.OK, true, "User validated", body);
         } else {
             // invalid
-            return new StdResponse(HttpStatus.OK, false, "Invalid password");
+            return new StdResponse(HttpStatus.BAD_REQUEST, false, "Invalid password");
         }
     }
 }
