@@ -33,12 +33,10 @@
 
 
 <script>
-  import auth from './auth/index.js'
-
   export default {
     methods: {
       logout() {
-        auth.logout();
+        localStorage.removeItem('id_token');
       },
       isAuthenticated() {
         return localStorage.getItem('id_token') != null;

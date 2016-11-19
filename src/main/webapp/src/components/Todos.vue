@@ -47,7 +47,6 @@
 
 </style>
 <script>
-  import auth from '../auth/index.js';
   export default{
     created() {
       this.todos = this.getTodos();
@@ -63,7 +62,7 @@
     methods: {
       createTodo() {
         var data = {'todo': this.newTodo};
-        var headers = {'headers': auth.getAuthHeader()};
+        var headers = {'headers': this.getAuthHeader()};
         this.$http.post("http://localhost:8080/api/todos", data, headers).then((response) => {
           this.newTodo = '';
           this.todos = this.getTodos();
@@ -79,7 +78,7 @@
         } else if (this.picked == 'Three') {
           endpoint += "?completed=true";
         }
-        var headers = {'headers': auth.getAuthHeader()};
+        var headers = {'headers': this.getAuthHeader()};
         this.$http.get(endpoint, headers).then((response) => {
           this.todos = response.body.body;
 
@@ -89,7 +88,7 @@
         })
       },
       deleteTodo(todoId) {
-        var headers = {'headers': auth.getAuthHeader()};
+        var headers = {'headers': this.getAuthHeader()};
         this.$http.delete("http://localhost:8080/api/todos/" + todoId, headers).then((response) => {
           this.todos = this.getTodos();
 
@@ -100,7 +99,7 @@
       },
       editTodo(todoId, todo, completed) {
         var data = {'todo': todo, 'completed': completed};
-        var headers = {'headers': auth.getAuthHeader()};
+        var headers = {'headers': this.getAuthHeader()};
         this.$http.put("http://localhost:8080/api/todos/" + todoId, data, headers).then((response) => {
           this.todos = this.getTodos();
 
@@ -108,6 +107,9 @@
           // error callback
           this.error = response.body.message;
         })
+      },
+      getAuthHeader() {
+        return {'Authorization': localStorage.getItem('id_token')};
       }
     }
   }

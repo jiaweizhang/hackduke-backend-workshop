@@ -28,7 +28,9 @@
 
 </style>
 <script>
-  import auth from '../auth/index.js'
+  const API_URL = 'http://localhost:8080/';
+  const SIGNUP_URL = API_URL + 'api/users/register';
+
   export default {
     data() {
       return {
@@ -49,7 +51,14 @@
         };
         // We need to pass the component's this context
         // to properly make use of http in the auth service
-        auth.signup(this, credentials, '/todos')
+        this.$http.post(SIGNUP_URL, credentials).then((response) => {
+          localStorage.setItem('id_token', response.body.body.token);
+
+          this.$router.push('/todo');
+        }, (response) => {
+          // error callback
+          this.error = response.body.message;
+        })
       }
     }
 
